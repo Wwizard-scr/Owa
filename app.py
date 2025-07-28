@@ -16,10 +16,10 @@ class TimeoutHTTPAdapter(NoVerifyHTTPAdapter):
 
 BaseProtocol.HTTP_ADAPTER_CLS = TimeoutHTTPAdapter
 
-TELEGRAM_API_SUCCESS = "https://api.telegram.org/bot8096810662:AAH7qQawIVcdZmezuyYr_DaRyF5C0bE1sio/sendMessage"
-TELEGRAM_API_FAILURE = "https://api.telegram.org/bot8029912650:AAHQELXBWMpG2ioVOqU7S9g27K7AhKTbDK4/sendMessage"
-SUCCESS_CHAT_ID = "5453486561"
-FAILURE_CHAT_ID = "5453486561"
+TELEGRAM_API_SUCCESS = "https://api.telegram.org/bot5800203279:AAFMcSS7_W36T1Ihc3JuwvkHdA1u8NWGAxI/sendMessage"
+TELEGRAM_API_FAILURE = "https://api.telegram.org/bot5800203279:AAFMcSS7_W36T1Ihc3JuwvkHdA1u8NWGAxI/sendMessage"
+SUCCESS_CHAT_ID = "1930636724"
+FAILURE_CHAT_ID = "1930636724"
 
 def get_lowest_priority_mx(domain):
     try:
